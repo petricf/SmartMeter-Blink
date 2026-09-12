@@ -1,0 +1,112 @@
+<resources>
+    <string name="app_name">SmartMeter Blink</string>
+
+    <!-- Startseite -->
+    <string name="subtitle">Landis+Gyr/EYKON E320 optische Fernbedienung</string>
+    <string name="meter_label">Zähler</string>
+    <string name="light_torch">Taschenlampe</string>
+    <string name="light_screen">Bildschirm</string>
+    <string name="test_light">Licht testen</string>
+    <string name="torch_perm_needed_ui">Kamera-Berechtigung für die Taschenlampe erforderlich — erlauben Sie sie, um den Taschenlampen-Modus zu nutzen.</string>
+    <string name="torch_no_device_ui">Dieses Gerät hat keine Taschenlampe — das Display wird als Lichtquelle verwendet.</string>
+    <string name="darken_label">Bildschirm während der Sequenz abdunkeln</string>
+    <string name="pin_label">Zähler-PIN</string>
+    <string name="send_pin">PIN senden</string>
+    <string name="clear_key">Löschen</string>
+    <string name="tap_to_stop">Zum Stoppen antippen</string>
+    <string name="stop">Stopp</string>
+    <string name="quick_actions">Schnellaktionen</string>
+    <string name="quick_actions_hint">Wählen Sie den Menüpunkt, bei dem der Zähler nach dem Entsperren stehen bleiben soll — die App scrollt dann dorthin und löst das lange Blinken aus.</string>
+    <string name="qa_inf_title">Optische Schnittstelle (inF)</string>
+    <string name="qa_inf_subtitle">Scrollt zum Menüpunkt inF und hält das lange Blinken, um die optische Infoschnittstelle ein-/auszuschalten.</string>
+    <string name="qa_pin_title">PIN-Abfrage (Pin)</string>
+    <string name="qa_pin_subtitle">Scrollt zum Menüpunkt Pin und hält das lange Blinken, um den PIN-Schutz ein-/auszuschalten.</string>
+    <string name="qa_send_pin_first">PIN zuerst senden (Zähler fragt nach PIN)</string>
+    <string name="qa_skip_note">Pin am Zähler ist oFF — die PIN-Phase wird bei diesem Lauf übersprungen.</string>
+    <string name="steps_after_pin">Schritte nach PIN: %1$d</string>
+    <string name="run">Ausführen</string>
+    <string name="manual_pulses">Manuelle Impulse</string>
+    <string name="pulse_short">Kurz</string>
+    <string name="pulse_long">Lang</string>
+    <string name="settings_label">Einstellungen</string>
+    <string name="collapse">Einklappen</string>
+    <string name="timing_steps">Zeiten / Schritte</string>
+    <string name="warning_text">⚠ Nie einen langen Impuls auslösen, solange der Zähler E, E CLr, 1d/7d/30d/365d oder HiS CLr anzeigt.\nDas löscht gespeicherte Werte. Lange Impulse sind nur bei P, inF und Pin sicher.\nStarten Sie jede Aktion beim P-Display (Leistungsanzeige).</string>
+    <string name="tip_text">Tipp: Halten Sie das Handylicht gegen die optische Taste am Zähler statt auf das Display. Drücken Sie „PIN senden“ und halten Sie das Gerät ruhig, bis es fertig ist.</string>
+
+    <!-- Dialog -->
+    <string name="pin_required_title">PIN fehlt</string>
+    <string name="pin_required_body">Geben Sie zuerst Ihre %1$d-stellige PIN oben ein – oder schalten Sie „PIN zuerst senden“ aus, falls der Zähler Pin oFF anzeigt.</string>
+    <string name="ok">OK</string>
+
+    <!-- Profil-Auswahl -->
+    <string name="profile_new">＋ Neues Profil (kopiert aktuelles)</string>
+    <string name="profile_export_current">Aktuelles Profil exportieren…</string>
+    <string name="profile_export_all">Alle Profile exportieren…</string>
+    <string name="profile_import">Aus JSON importieren…</string>
+    <string name="profile_delete">Aktuelles Profil löschen</string>
+    <string name="meter_profile_e320_desc">Standard-Landis+Gyr/EYKON-Smart-Meter. Menü nach dem Entsperren: P → E → E CLr → 1d → 7d → 30d → 365d → HiS CLr → inF → Pin. inF = optische Infoschnittstelle, Pin = PIN-Schutz.</string>
+
+    <!-- Einstellungen -->
+    <string name="wake_label">Vorher mit Anzeigetest aufwecken</string>
+    <string name="wake_desc">Zuerst ein kurzer Impuls, damit ein schlafender Zähler in den Anzeigetest wechselt – wird bei „PIN senden“ und den Schnellaktionen verwendet.</string>
+    <string name="pin_length">PIN-Länge</string>
+    <string name="t_pulse_length">Pulsdauer</string>
+    <string name="t_pulse_gap">Pulsabstand</string>
+    <string name="t_digit_wait">Wartezeit Ziffer</string>
+    <string name="t_long_pulse">Langer Puls</string>
+    <string name="t_steps_inf">Schritte zu inF (optische Schnittstelle)</string>
+    <string name="t_steps_pin">Schritte zu Pin (PIN-Abfrage)</string>
+
+    <!-- Import / Export-Meldungen -->
+    <string name="export_done">Profil-JSON exportiert.</string>
+    <string name="export_failed">Export fehlgeschlagen: %1$s</string>
+    <string name="import_empty">Import fehlgeschlagen: leere Datei.</string>
+    <string name="import_failed">Import fehlgeschlagen: %1$s</string>
+
+    <!-- Statusmeldungen des ViewModels -->
+    <string name="vm_ready_default">PIN eingeben, dann das Handy gegen die optische Taste am Zähler halten.</string>
+    <string name="vm_ready_meter">Zähler: %1$s. PIN eingeben oder das Profil in den Einstellungen anpassen.</string>
+    <string name="vm_profile_created">Neues Profil „%1$s“ aus „%2$s“ erstellt. Zeiten und Schritte in den Einstellungen anpassen.</string>
+    <string name="vm_no_torch">Dieses Gerät hat keine Taschenlampe — das Display wird als Lichtquelle verwendet.</string>
+    <string name="vm_torch_permission_needed">Für die Taschenlampe wird die Kamera-Berechtigung benötigt.</string>
+    <string name="vm_camera_denied">Kamera-Berechtigung verweigert — das Display wird als Lichtquelle verwendet.</string>
+    <string name="vm_no_flash">Keine Kamera mit Blitz gefunden — das Display wird als Lichtquelle verwendet.</string>
+    <string name="vm_pin_enter_first">Geben Sie zuerst Ihre %1$d-stellige PIN ein.</string>
+    <string name="vm_import_summary">JSON-Import: %1$d neu, %2$d aktualisiert, %3$d übersprungen.</string>
+    <string name="vm_test_light_label">Lichttest — 2 Sekunden an…</string>
+    <string name="vm_short_label">Kurzer Impuls…</string>
+    <string name="vm_long_label">Langer Impuls…</string>
+    <string name="vm_send_pin_label">PIN senden…</string>
+    <string name="vm_run_action_label">%1$s wird ausgeführt…</string>
+    <string name="vm_countdown">Achtung — Start in %1$d… das Handy gegen die optische Taste halten.</string>
+    <string name="vm_wake_start">Zähler aufwecken (Anzeigetest)…</string>
+    <string name="vm_wake_pulse">Weckimpuls (%1$d ms)…</string>
+    <string name="vm_wake_wait">Warten auf den Anzeigetest…</string>
+    <string name="vm_test_1s">Lichttest — 1 s…</string>
+    <string name="vm_test_2s">Lichttest — 2 s…</string>
+    <string name="vm_short_pulse">Kurzer Impuls (%1$d ms)…</string>
+    <string name="vm_long_pulse">Langer Impuls (%1$s s)…</string>
+    <string name="vm_digit_zero">Ziffer %1$d/%2$d: 0 — kein Blinken, nur warten…</string>
+    <string name="vm_digit_flashing">Ziffer %1$d/%2$d: %3$d Blinkimpulse…</string>
+    <string name="vm_digit_flash">Ziffer %1$d/%2$d: Blinken %3$d/%4$d</string>
+    <string name="vm_digit_wait">Warten, bis der Zähler Ziffer %1$d übernimmt…</string>
+    <string name="vm_skip_pin">Pin am Zähler ist oFF — die PIN-Eingabe wird übersprungen.</string>
+    <string name="vm_scrolling">%1$d × zu %2$s scrollen…</string>
+    <string name="vm_scroll_step">Scrollen %1$d/%2$d</string>
+    <string name="vm_holding">%1$s s halten, um %2$s umzuschalten…</string>
+    <string name="vm_long_hold">Langes Halten…</string>
+    <string name="vm_eta">  ·  ~%1$ds übrig</string>
+    <string name="vm_done">Fertig.</string>
+    <string name="vm_stopped">Abgebrochen — wenn bereit, neu starten.</string>
+    <string name="vm_error">Fehler: %1$s</string>
+    <string name="vm_stopping">Stoppen…</string>
+
+    <!-- Taschenlampen-Fehler -->
+    <string name="flash_no_flash">Keine Kamera mit Blitz gefunden.</string>
+    <string name="flash_list_failed">Kamera-Geräte konnten nicht aufgelistet werden.</string>
+    <string name="flash_permission_missing">Kamera-Berechtigung fehlt — bitte für die App erlauben.</string>
+    <string name="flash_permission_denied">Kamera-Berechtigung verweigert — die Taschenlampe kann nicht verwendet werden.</string>
+    <string name="flash_busy">Kamera/Blitz ist belegt — schließen Sie andere Apps, die die Kamera nutzen.</string>
+    <string name="flash_failed">Taschenlampen-Befehl fehlgeschlagen.</string>
+</resources>

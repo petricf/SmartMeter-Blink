@@ -1,0 +1,15 @@
+[
+    {
+        "format": 1,
+        "id": "e320",
+        "name": "Landis+Gyr/EYKON E320",
+        "pinLength": 4,
+        "pulseLengthMs": 180,
+        "pulseGapMs": 320,
+        "digitWaitMs": 3400,
+        "longPulseMs": 6000,
+        "opticalScrolls": 8,
+        "pinScrolls": 9,
+        "description": ""
+    }
+]

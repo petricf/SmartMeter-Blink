@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>SmartMeter Blink – Benutzerhandbuch</title></head>
+<body>
+<style>
+body { font-family: 'Liberation Sans', 'DejaVu Sans', sans-serif; font-size: 10.5pt; color:#222; }
+h1 { color:#0b3d62; font-size:20pt; border-bottom:2px solid #0b3d62; padding-bottom:6px; }
+h2 { color:#0b3d62; font-size:15pt; margin-top:1.4em; border-bottom:1px solid #c8d6e5; }
+h3 { color:#2c3e50; font-size:12pt; }
+p { margin:0.4em 0; }
+table { border-collapse:collapse; width:100%; margin:0.6em 0; }
+th, td { border:1px solid #8ba0b0; padding:5px 8px; font-size:9.5pt; text-align:left; vertical-align:top; }
+th { background:#dbe9f6; }
+code, pre { font-family:'Liberation Mono','DejaVu Sans Mono',monospace; font-size:9pt; }
+pre { background:#f4f6f8; border:1px solid #c8d6e5; padding:8px; white-space:pre-wrap; }
+.warn { background:#fdecea; border:1px solid #e74c3c; padding:8px 12px; border-radius:4px; }
+.tip  { background:#eafaf1; border:1px solid #27ae60; padding:8px 12px; border-radius:4px; }
+li { margin:0.2em 0; }
+</style>
+
+<h1>SmartMeter Blink<br>Benutzerhandbuch</h1>
+<p><strong>Version 1.0</strong> — App für Android (App-ID <code>de.smartmeter.blink</code>)</p>
+
+<h2>1. Über die App</h2>
+<p>
+SmartMeter Blink verwandelt das Licht Ihres Handys in eine optische Fernbedienung für einen
+Landis+Gyr/EYKON E320 (oder ähnlichen) Smart-Meter. Der Zähler besitzt eine optische Schnittstelle
+und erkennt Tastendrücke als kurze oder lange Lichteinblendungen. Die App nutzt die
+<strong>Taschenlampe</strong> (Kamera-LED) oder ein <strong>weißes Display-Blitzlicht</strong>,
+um die Zähler-PIN zu übertragen und Einstellungen wie die optische Infoschnittstelle
+(<code>inF</code>) und den PIN-Schutz (<code>Pin</code>) umzuschalten – ganz ohne die physischen
+Tasten des Zählers zu berühren.
+</p>
+<p>Eine englische Fassung finden Sie unter <em>UsersGuide.pdf</em>.</p>
+
+<figure>
+<img src="images/MainWindow.jpg" style="height:10cm; width:auto; border:1px solid #c8d6e5;" alt="Startbildschirm von SmartMeter Blink">
+<figcaption style="font-size:9pt; color:#555; margin-top:2px;">Abbildung 1: Der Startbildschirm der App — oben Profilauswahl und Schnellaktionen, darunter Taschenlampe / Displaylicht und Einstellungen.</figcaption>
+</figure>
+
+<h2>2. Wichtige Sicherheitshinweise</h2>
+<div class="warn">
+<strong>⚠ Achtung – Datenverlust.</strong> Nur ein <em>langes</em> Blinken (&gt;5&nbsp;s) entspricht
+dem Gedrückthalten einer Zählertaste und kann eine Aktion auslösen. Ein langes Blinken
+<strong>löscht gespeicherte Werte</strong>, wenn der Zähler gerade
+<code>E</code>, <code>E&nbsp;CLr</code>, <code>1d</code>, <code>7d</code>, <code>30d</code>,
+<code>365d</code> oder <code>HiS&nbsp;CLr</code> anzeigt. Lange Impulse sind nur bei
+<code>P</code>, <code>inF</code> und <code>Pin</code> sicher. Starten Sie jede Aktion beim
+<code>P</code>-Display (Leistungsanzeige).
+</div>
+<div class="warn">
+<strong>⚠ Rechtshinweis – Missbrauch.</strong> Diese App und ihr Quellcode dürfen nur an Zählern
+verwendet werden, die Ihnen gehören oder für die Sie berechtigt sind. Die Nutzung oder Veränderung
+der App oder ihres Quellcodes, um die Zähler-PIN per <strong>Brute-Force-Angriff</strong> zu ermitteln
+oder anderweitig unberechtigten Zugriff auf einen Zähler zu erlangen, ist <strong>nicht gestattet</strong>.
+</div>
+<div class="tip">
+<strong>Tipp:</strong> Halten Sie das Handylicht gegen die <em>optische Taste/den optischen
+Anschluss</em> des Zählers statt auf das Display, halten Sie es ruhig und bewegen Sie es erst,
+wenn die Sequenz beendet ist.
+</div>
+
+<h2>3. Installation</h2>
+<ol>
+<li>Installieren Sie die <code>SmartMeter-Blink.apk</code> auf dem Handy (Datei kopieren oder teilen,
+dann öffnen; „Unbekannte Quellen zulassen", wenn gefragt wird).</li>
+<li>Starten Sie <strong>SmartMeter Blink</strong>. Beim ersten Start fragt die App nach der
+<strong>Kamera</strong>-Berechtigung – sie wird für die Taschenlampe benötigt. Erlauben Sie sie,
+andernfalls wechselt die App automatisch zum Display-Blitzlicht.</li>
+<li>Prüfen Sie das Signal optional mit <strong>Licht testen</strong>: Die Taschenlampe bzw. das
+Display leuchtet etwa zwei Sekunden.</li>
+</ol>
+<p>Die App benötigt zwei Berechtigungen: <strong>Kamera</strong> (Taschenlampe) und
+<strong>Vibrieren</strong> (Rückmeldung während des Blinkens). Es werden keine Daten erfasst;
+alles bleibt auf dem Gerät.</p>
+
+<h2>4. Schnellstart</h2>
+<ol>
+<li>App öffnen – standardmäßig ist das Profil <strong>Landis+Gyr/EYKON E320</strong> aktiv.</li>
+<li>Lichtquelle wählen: <strong>Taschenlampe</strong> oder <strong>Bildschirm</strong>.</li>
+<li>Die Zähler-PIN über die Tastatur eingeben (der 4-stellige Display-Testcode des Zählers).</li>
+<li>Das Handy so halten, dass das Licht auf den optischen Anschluss des Zählers zeigt.</li>
+<li><strong>PIN senden</strong> drücken. Nach einem 3-Sekunden-Countdown weckt die App den
+Zähler mit einem kurzen Impuls und sendet die PIN Ziffer für Ziffer.</li>
+<li>Halten Sie das Handy ruhig. Ein Fortschrittsbalken zeigt die verbleibende Zeit.</li>
+<li>Wenn der Zähler die PIN-Abfrage verlässt, sind Sie im Menü. Mit <strong>Kurz</strong>
+blättern und mit <strong>Lang</strong> auslösen – oder lassen Sie das mit den Schnellaktionen
+(Abschnitt 7) automatisch erledigen.</li>
+</ol>
+
+<h2>5. So funktioniert die optische Schnittstelle</h2>
+<p>
+Zähler-Tasten werden durch Licht ausgelöst. <strong>Ein kurzes Blinken</strong> entspricht einem
+kurzen Tastendruck, ein <strong>langes Blinken</strong> (5–6&nbsp;s) dem Gedrückthalten der Taste.
+</p>
+<ul>
+<li>Im Ruhezustand zeigt der Zähler die Leistungsanzeige (<code>P</code>). Ein kurzer Impuls weckt
+ihn in den <em>Anzeigetest</em> (alle Segmente, ca. 4&nbsp;s), danach folgt die
+<em>PIN-Abfrage</em>.</li>
+<li>Jede PIN-Ziffer wird als genauso viele kurze Impulse gesendet:
+<code>1</code> → ein Impuls, <code>2</code> → zwei Impulse, …, <code>9</code> → neun Impulse,
+<code>0</code> → kein Impuls (die App wartet einfach).</li>
+<li>Nach jeder Ziffer (außer der letzten) wartet die App ~3,4&nbsp;s, damit der Zähler die Ziffer
+übernehmen kann (sein Timeout beträgt ~3&nbsp;s).</li>
+<li>Nach der letzten Ziffer entsperrt der Zähler in das Servicemenü.</li>
+</ul>
+
+<h3>Menü nach dem Entsperren</h3>
+<p>Ausgehend von <code>P</code> blättert jeder <strong>kurze</strong> Impuls einen Schritt weiter:</p>
+<table>
+<tr><th>Schritt</th><th>Anzeige</th><th>Bedeutung</th><th>Langer Impuls</th></tr>
+<tr><td>0</td><td><code>P</code></td><td>Momentanleistung</td><td>sicher</td></tr>
+<tr><td>1</td><td><code>E</code></td><td>Verbrauch Abrechnungsperiode</td><td>gefährlich</td></tr>
+<tr><td>2</td><td><code>E CLr</code></td><td>Abrechnungsperiode löschen</td><td>⚠ löscht</td></tr>
+<tr><td>3</td><td><code>1d</code></td><td>Letzte 24 Stunden</td><td>gefährlich</td></tr>
+<tr><td>4</td><td><code>7d</code></td><td>Letzte 7 Tage</td><td>gefährlich</td></tr>
+<tr><td>5</td><td><code>30d</code></td><td>Letzte 30 Tage</td><td>gefährlich</td></tr>
+<tr><td>6</td><td><code>365d</code></td><td>Letzte 365 Tage</td><td>gefährlich</td></tr>
+<tr><td>7</td><td><code>HiS CLr</code></td><td>Historie löschen</td><td>⚠ löscht</td></tr>
+<tr><td>8</td><td><code>inF</code></td><td>Optische Infoschnittstelle</td><td><strong>schaltet ein/aus</strong></td></tr>
+<tr><td>9</td><td><code>Pin</code></td><td>PIN-Schutz</td><td><strong>schaltet ein/aus</strong></td></tr>
+</table>
+<p>Der nächste Impuls nach <code>Pin</code> führt zurück zur Leistungsanzeige. Lange Impulse sind
+nur bei <code>P</code>, <code>inF</code> und <code>Pin</code> sicher – die beiden
+<code>CLr</code>-Punkte löschen gespeicherte Werte.</p>
+
+<h2>6. Übersicht der App-Oberfläche</h2>
+<h3>Zähler-Profil</h3>
+<p>Zeigt das aktive Profil (Standard <code>Landis+Gyr/EYKON E320</code>) mit Beschreibung. Tippen Sie
+auf die Schaltfläche neben „Zähler", um das Profilmenü zu öffnen:
+Profil wählen, <strong>＋ Neues Profil (kopiert aktuelles)</strong>,
+<strong>Aktuelles Profil exportieren…</strong>, <strong>Alle Profile exportieren…</strong>,
+<strong>Aus JSON importieren…</strong> und <strong>Aktuelles Profil löschen</strong>.</p>
+<h3>Lichtquelle</h3>
+<p><strong>Taschenlampe</strong> nutzt die Kamera-LED; sie funktioniert nur, wenn das Gerät einen
+Blitz hat und die Kamera-Berechtigung erteilt wurde. <strong>Bildschirm</strong> lässt das ganze
+Display weiß aufleuchten und funktioniert auf jedem Gerät. <strong>Licht testen</strong> leuchtet
+die gewählte Quelle ca. 2&nbsp;s an.</p>
+<h3>Bildschirm während der Sequenz abdunkeln</h3>
+<p>Während eines Laufs wird der Bildschirm schwarz und zeigt nur den Fortschritt (ideal bei
+Dunkelheit). Sie können die Sequenz durch Antippen stoppen.</p>
+<h3>PIN-Eingabe</h3>
+<p>Tastatur mit Ziffern, Zurücktaste und Löschen. Die erforderliche PIN-Länge (Standard 4,
+einstellbar 1–8) zeigt sich an der Anzahl der Felder. Während eines Laufs wird die gerade
+übertragene Ziffer hervorgehoben.</p>
+<h3>PIN senden / Stopp</h3>
+<p><strong>PIN senden</strong> startet die komplette Sequenz (nur aktiv, wenn die PIN vollständig
+ist). Während des Laufs wird aus der Schaltfläche <strong>Stopp</strong>.</p>
+<h3>Fortschrittsbalken</h3>
+<p>Zeigt den Fortschritt und eine Schätzung wie <code>~42s übrig</code>.</p>
+<h3>Schnellaktionen</h3>
+<p>Zwei Karten automatisieren den Menüweg: <strong>Optische Schnittstelle (inF)</strong> und
+<strong>PIN-Abfrage (Pin)</strong>. Jede Karte hat einen Schalter pro Lauf
+<strong>„PIN zuerst senden (Zähler fragt nach PIN)"</strong>:</p>
+<ul>
+<li><strong>Ein</strong> (Standard): Die App sendet die PIN, scrollt dann zum Ziel und hält den
+langen Impuls, um es umzuschalten.</li>
+<li><strong>Aus</strong>: Die PIN-Phase wird übersprungen, nur die Menüschritte werden gesendet.
+Diesen Zustand wählen, wenn der Zähler <code>Pin oFF</code> anzeigt – bei deaktiviertem PIN
+blättert jeder Impuls das Menü weiter, sodass das Senden der PIN-Ziffern am Ziel vorbeilaufen
+würde (die App weist darauf hin).</li>
+</ul>
+<p>Die Zeile <strong>„Schritte nach PIN: N"</strong> zeigt, wie viele Menüschritte das Profil für
+diese Aktion verwendet (unter Einstellungen änderbar). Wird die PIN benötigt, aber ist noch nicht
+eingegeben, fragt ein Dialog zunächst danach.</p>
+<h3>Manuelle Impulse</h3>
+<p><strong>Kurz</strong> = ein Menüschritt; <strong>Lang</strong> = halten (Einstellung umschalten).
+Praktisch zum eigenen Blättern – beachten Sie die Sicherheitswarnung: niemals lang blitzen, wenn
+ein <code>CLr</code>-Display angezeigt wird.</p>
+<h3>Bildschirmausrichtung</h3>
+<p>Die App funktioniert auch im <strong>Querformat</strong>: Einfach das Telefon drehen. Die Inhalte
+scrollen vertikal, sodass nichts abgeschnitten wird.</p>
+<h3>Einstellungen</h3>
+<ul>
+<li><strong>Vorher mit Anzeigetest aufwecken</strong> – zuerst ein kurzer Impuls, dann Warten
+(4&nbsp;s), damit ein schlafender Zähler in den Anzeigetest wechselt. Gilt für „PIN senden" und
+die Schnellaktionen.</li>
+<li><strong>PIN-Länge</strong> – 1 bis 8 Ziffern.</li>
+<li><strong>Zeiten-Schieberegler</strong> – Pulsdauer (100–400&nbsp;ms), Pulsabstand
+(100–600&nbsp;ms), Wartezeit Ziffer (2,0–5,0&nbsp;s), langer Puls (4,0–9,0&nbsp;s).</li>
+<li><strong>Schritte zu inF / Schritte zu Pin</strong> – wie viele Menüschritte die Schnellaktionen
+gehen (0–16).</li>
+</ul>
+<h2>7. Profile sowie JSON-Export/Import</h2>
+<p>Alle Zeiten und Schrittzahlen werden je Profil gespeichert, sodass Sie sie für ein anderes
+Zählermodell anpassen und mehrere Voreinstellungen behalten können.</p>
+<ul>
+<li><strong>＋ Neues Profil (kopiert aktuelles)</strong> – dupliziert das aktive Profil zum
+Experimentieren, ohne das Original zu verändern.</li>
+<li><strong>Aktuelles/alle Profile exportieren</strong> – schreibt das/die Profil(e) in eine
+JSON-Datei (Zielort auswählen).</li>
+<li><strong>Aus JSON importieren…</strong> – liest eine JSON-Datei; Profile mit bekannter ID
+werden aktualisiert, neue hinzugefügt, ungültige Einträge übersprungen.</li>
+</ul>
+<pre>Beispiel-JSON:
+[ { "format": 1,
+    "id": "e320", "name": "Landis+Gyr/EYKON E320", "pinLength": 4,
+    "pulseLengthMs": 180, "pulseGapMs": 320, "digitWaitMs": 3400, "longPulseMs": 6000,
+    "opticalScrolls": 8, "pinScrolls": 9,
+    "description": "Standard-Zähler. Menü: P → E → E CLr → 1d → 7d → 30d → 365d → HiS CLr → inF → Pin." } ]</pre>
+
+<h2>8. Zeitvorgaben</h2>
+<table>
+<tr><th>Parameter</th><th>Standard</th><th>Einstellbar</th><th>Verwendung</th></tr>
+<tr><td>Pulsdauer</td><td>180 ms</td><td>100–400 ms</td><td>Jeder einzelne Impuls</td></tr>
+<tr><td>Pulsabstand</td><td>320 ms</td><td>100–600 ms</td><td>Zwischen den Impulsen</td></tr>
+<tr><td>Wartezeit Ziffer</td><td>3,4 s</td><td>2,0–5,0 s</td><td>Zähler übernimmt eine Ziffer</td></tr>
+<tr><td>Langer Puls</td><td>6,0 s</td><td>4,0–9,0 s</td><td>inF / Pin umschalten</td></tr>
+<tr><td>Manuell kurz</td><td>250 ms</td><td>fest</td><td>Weckimpuls & manuell „Kurz"</td></tr>
+<tr><td>Wartezeit aufwachen</td><td>4,0 s</td><td>fest</td><td>Warten auf den Anzeigetest</td></tr>
+<tr><td>Countdown</td><td>3 s</td><td>fest</td><td>Vor jeder Sequenz</td></tr>
+</table>
+
+<h2>9. Fehlerbehebung</h2>
+<table>
+<tr><th>Problem</th><th>Lösung</th></tr>
+<tr><td>Taschenlampe schaltet nicht ein</td><td>Kamera-Berechtigung erteilen (App-Start oder Android-Appeinstellungen). Die App zeigt den Grund in Rot an. Manche Geräte sperren die Taschenlampe, solange eine andere App die Kamera nutzt – diese beenden.</td></tr>
+<tr><td>„Dieses Gerät hat keine Taschenlampe"</td><td>Das Handy hat keinen Kamerablitz. Nutzen Sie die Lichtquelle Bildschirm.</td></tr>
+<tr><td>Zähler wacht nicht auf / keine Reaktion</td><td>Das Licht exakt auf den optischen Anschluss halten, ruhig halten und sicherstellen, dass „Vorher mit Anzeigetest aufwecken" aktiv ist. Bei Bedarf den Pulsabstand in den Einstellungen erhöhen.</td></tr>
+<tr><td>Sequenz abgeschlossen, Zähler aber nicht entsperrt</td><td>Besser ausrichten und/oder die Wartezeit Ziffer erhöhen. Korrekte PIN sicherstellen.</td></tr>
+<tr><td>Zähler zeigt <code>Pin oFF</code> und das Menü springt übers Ziel hinaus</td><td>„PIN zuerst senden" für die Schnellaktion ausschalten.</td></tr>
+<tr><td>Sprache der App</td><td>Die App folgt der Display-Sprache des Handys: deutsches Handy → deutsche Oberfläche, sonst Englisch.</td></tr>
+</table>
+
+<h2>10. Deinstallation</h2>
+<p>App-Icon lange drücken → Deinstallieren. Alle Profile und Einstellungen liegen nur auf dem
+Gerät und werden mit der App entfernt, sofern Sie sie nicht vorher als JSON-Datei exportiert
+haben.</p>
+
+<p style="margin-top:2em; color:#666; font-size:9pt;">Landis+Gyr, EYKON und E320 sind Warenzeichen ihrer
+Inhaber. Diese App ist ein unabhängiges Hobby-Projekt; der Hersteller steht nicht in Verbindung.</p>
+<p style="margin-top:1em; color:#666; font-size:9pt;">Diese App und ihr Quellcode dürfen nicht
+verwendet werden, um eine Zähler-PIN per Brute-Force-Angriff zu ermitteln oder unberechtigten Zugriff
+auf einen Zähler zu erlangen.</p>
+</body></html>

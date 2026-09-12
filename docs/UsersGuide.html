@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>SmartMeter Blink – User Guide</title></head>
+<body>
+<style>
+body { font-family: 'Liberation Sans', 'DejaVu Sans', sans-serif; font-size: 10.5pt; color:#222; }
+h1 { color:#0b3d62; font-size:20pt; border-bottom:2px solid #0b3d62; padding-bottom:6px; }
+h2 { color:#0b3d62; font-size:15pt; margin-top:1.4em; border-bottom:1px solid #c8d6e5; }
+h3 { color:#2c3e50; font-size:12pt; }
+p { margin:0.4em 0; }
+table { border-collapse:collapse; width:100%; margin:0.6em 0; }
+th, td { border:1px solid #8ba0b0; padding:5px 8px; font-size:9.5pt; text-align:left; vertical-align:top; }
+th { background:#dbe9f6; }
+code, pre { font-family:'Liberation Mono','DejaVu Sans Mono',monospace; font-size:9pt; }
+pre { background:#f4f6f8; border:1px solid #c8d6e5; padding:8px; white-space:pre-wrap; }
+.warn { background:#fdecea; border:1px solid #e74c3c; padding:8px 12px; border-radius:4px; }
+.tip  { background:#eafaf1; border:1px solid #27ae60; padding:8px 12px; border-radius:4px; }
+li { margin:0.2em 0; }
+</style>
+
+<h1>SmartMeter Blink<br>User Guide</h1>
+<p><strong>Version 1.0</strong> — App for Android (application id <code>de.smartmeter.blink</code>)</p>
+
+<h2>1. About the App</h2>
+<p>
+SmartMeter Blink turns the light of your phone into an optical remote control for a
+Landis+Gyr/EYKON E320 (or similar) smart electricity meter. The meter has an optical port
+and accepts button presses as short or long bursts of light. The app uses the camera
+<strong>torch</strong> or a full-white <strong>screen</strong> flash to send the 4-digit
+PIN of the meter and to toggle settings such as the optical info interface (<code>inF</code>)
+and the PIN protection (<code>Pin</code>) — without touching the meter's physical buttons.
+</p>
+<p>Included in this guide (German version: <em>Benutzerhandbuch.pdf</em>).</p>
+
+<figure>
+<img src="images/MainWindow.jpg" style="height:10cm; width:auto; border:1px solid #c8d6e5;" alt="SmartMeter Blink start screen">
+<figcaption style="font-size:9pt; color:#555; margin-top:2px;">Figure 1: The app&rsquo;s start screen — profile selector and quick actions on top, torch / screen light and settings below.</figcaption>
+</figure>
+
+<h2>2. Safety First</h2>
+<div class="warn">
+<strong>⚠ Warning — data loss.</strong> Only a long flash (&gt;5&nbsp;s) actually presses
+the "hold" button of the meter and can trigger an action. A long flash
+<strong>erases stored values</strong> when the meter currently shows
+<code>E</code>, <code>E&nbsp;CLr</code>, <code>1d</code>, <code>7d</code>, <code>30d</code>,
+<code>365d</code> or <code>HiS&nbsp;CLr</code>. Long flashes are only safe on the displays
+<code>P</code>, <code>inF</code> and <code>Pin</code>. Always start every action from the
+<code>P</code> (power) display.
+</div>
+<div class="warn">
+<strong>⚠ Legal notice — misuse.</strong> This app and its source code may only be used on meters
+you own or are authorized to operate. Using or modifying the app or its source code to obtain a
+meter&rsquo;s PIN by <strong>brute force</strong>, or to otherwise gain unauthorized access to a meter,
+is <strong>not permitted</strong>.
+</div>
+<div class="tip">
+<strong>Tip:</strong> Hold the phone's light against the meter's <em>optical button/port</em>
+instead of the display, keep it steady, and do not move it until the sequence has finished.
+</div>
+
+<h2>3. Installation</h2>
+<ol>
+<li>Install the <code>SmartMeter-Blink.apk</code> on the phone (Share or copy the file and open it; allow "install unknown apps" when asked).</li>
+<li>Start <strong>SmartMeter Blink</strong>. On first launch the app asks for the
+<strong>Camera</strong> permission — this is needed to use the torch. Grant it, or the
+app automatically falls back to the screen flash.</li>
+<li>Optionally verify the signal by pressing <strong>Test light</strong>: the torch or screen
+should light up for about two seconds.</li>
+</ol>
+<p>The app needs two permissions: <strong>Camera</strong> (torch) and <strong>Vibrate</strong>
+(feedback during flashes). No other data is collected; everything stays on the device.</p>
+
+<h2>4. Quick Start</h2>
+<ol>
+<li>Open the app — the profile <strong>Landis+Gyr/EYKON E320</strong> is active by default.</li>
+<li>Chose the light source: <strong>Torch</strong> or <strong>Screen</strong>.</li>
+<li>Enter your meter PIN on the keypad (the meter's 4-digit display test code).</li>
+<li>Hold the phone so the light aims at the meter's optical port.</li>
+<li>Press <strong>Send PIN</strong>. A 3-second countdown starts, then the app wakes the meter
+with a short pulse and sends the PIN digit by digit.</li>
+<li>Keep the phone steady. A progress bar shows the remaining time.</li>
+<li>When the meter leaves the PIN prompt, you are in the menu. Use <strong>Short</strong>
+pulses to scroll and a <strong>Long</strong> pulse to act — or let the app do it for you with
+Quick Actions (section 7).</li>
+</ol>
+
+<h2>5. How the Optical Interface Works</h2>
+<p>
+Meter buttons are triggered by light. <strong>One short flash</strong> equals one short button
+press, a <strong>long flash</strong> (5–6&nbsp;s) equals keeping the button pressed.
+</p>
+<ul>
+<li>When the meter is idle it shows the power display (<code>P</code>). One short flash wakes it
+into the <em>display test</em> (all segments, about 4&nbsp;s), then the <em>PIN prompt</em>.</li>
+<li>Each PIN digit is sent as that many short flashes:
+<code>1</code> → one flash, <code>2</code> → two flashes, …, <code>9</code> → nine flashes,
+<code>0</code> → no flash (the app simply waits).</li>
+<li>After each digit (except the last) the app waits ~3.4&nbsp;s so the meter can accept the
+digit (its timeout is ~3&nbsp;s).</li>
+<li>After the last digit the meter unlocks into the service menu.</li>
+</ul>
+
+<h3>Menu after unlock</h3>
+<p>Starting from <code>P</code>, each <strong>short</strong> flash scrolls one step:</p>
+<table>
+<tr><th>Step</th><th>Display</th><th>Meaning</th><th>Long flash</th></tr>
+<tr><td>0</td><td><code>P</code></td><td>Momentary power</td><td>safe</td></tr>
+<tr><td>1</td><td><code>E</code></td><td>Own-period consumption</td><td>dangerous</td></tr>
+<tr><td>2</td><td><code>E CLr</code></td><td>Clear own period</td><td>⚠ erases it</td></tr>
+<tr><td>3</td><td><code>1d</code></td><td>Last 24 hours</td><td>dangerous</td></tr>
+<tr><td>4</td><td><code>7d</code></td><td>Last 7 days</td><td>dangerous</td></tr>
+<tr><td>5</td><td><code>30d</code></td><td>Last 30 days</td><td>dangerous</td></tr>
+<tr><td>6</td><td><code>365d</code></td><td>Last 365 days</td><td>dangerous</td></tr>
+<tr><td>7</td><td><code>HiS CLr</code></td><td>Clear history</td><td>⚠ erases it</td></tr>
+<tr><td>8</td><td><code>inF</code></td><td>Optical info interface</td><td><strong>toggles on/off</strong></td></tr>
+<tr><td>9</td><td><code>Pin</code></td><td>PIN protection</td><td><strong>toggles on/off</strong></td></tr>
+</table>
+<p>The next pulse after <code>Pin</code> returns to the power display. Long flashes are only
+safe on <code>P</code>, <code>inF</code> and <code>Pin</code> — the two <code>CLr</code> items
+wipe stored values.</p>
+
+<h2>6. Screen Tour</h2>
+<h3>Meter profile</h3>
+<p>Shows the active profile (default <code>Landis+Gyr/EYKON E320</code>) and its description.
+Tap the button next to "Meter" to open the profile menu:
+select another profile, <strong>＋ New profile (copy current)</strong>,
+<strong>Export current profile…</strong>, <strong>Export all profiles…</strong>,
+<strong>Import from JSON…</strong> and <strong>Delete current profile</strong>.</p>
+<h3>Light source</h3>
+<p><strong>Torch</strong> uses the camera LED; it only works if the device has a flash and the
+Camera permission is granted. <strong>Screen</strong> flashes the whole display white and works
+on every device. <strong>Test light</strong> lights the chosen source for ~2&nbsp;s.</p>
+<h3>Darken screen during sequence</h3>
+<p>During a run the screen turns black and only shows the progress (ideal in the dark). You can
+stop the sequence by tapping anywhere.</p>
+<h3>PIN entry</h3>
+<p>Keypad with digits, backspace and clear. The required PIN length (default 4, configurable
+1–8) is shown by the number of boxes. During a run the currently-transmitted digit is highlighted.</p>
+<h3>Send PIN / Stop</h3>
+<p><strong>Send PIN</strong> starts the full sequence (only enabled when the PIN is complete).
+While running, the same button becomes <strong>Stop</strong>.</p>
+<h3>Progress bar</h3>
+<p>Shows how far the sequence is and an estimate such as <code>~42s left</code>.</p>
+<h3>Quick actions</h3>
+<p>Two cards automate the menu walk: <strong>Optical interface (inF)</strong> and
+<strong>PIN requirement (Pin)</strong>. Each card has a per-run switch
+<strong>"Send PIN first (meter asks for PIN)"</strong>:</p>
+<ul>
+<li><strong>On</strong> (default): the app sends the PIN, then scrolls to the item and holds
+the long flash to toggle it.</li>
+<li><strong>Off</strong>: the PIN phase is skipped and only the menu steps are sent. Use this
+when the meter shows <code>Pin oFF</code> — with PIN disabled every flash scrolls the menu, so
+sending PIN digits would walk past your target (the app warns about this).</li>
+</ul>
+<p>The line <strong>"Steps after PIN: N"</strong> shows how many scroll steps the profile uses
+for that action (edit under Settings). If the PIN is required but not yet entered, a dialog
+asks for it first.</p>
+<h3>Manual pulses</h3>
+<p><strong>Short</strong> = one menu step; <strong>Long</strong> = hold (toggle an item).
+Useful when you want to scroll yourself; remember the safety warning, never long-flash a
+<code>CLr</code> display.</p>
+<h3>Screen orientation</h3>
+<p>The app also works in <strong>landscape</strong> orientation: simply rotate the phone. The
+content scrolls vertically, so nothing is cut off.</p>
+<h3>Settings</h3>
+<ul>
+<li><strong>Wake with display test first</strong> — a single short pulse first, then a wait
+(4&nbsp;s) so a sleeping meter enters the display test. Used by Send PIN and the quick actions.</li>
+<li><strong>PIN length</strong> — 1 to 8 digits.</li>
+<li><strong>Timing sliders</strong> — pulse length (100–400&nbsp;ms), pulse gap (100–600&nbsp;ms),
+digit wait (2.0–5.0&nbsp;s), long pulse (4.0–9.0&nbsp;s).</li>
+<li><strong>Steps to inF / Steps to Pin</strong> — how many menu steps the quick actions walk
+(0–16).</li>
+</ul>
+<h2>7. Profiles and JSON Export/Import</h2>
+<p>All timings and step counts are stored per profile, so you can tweak them for a different
+meter model and keep multiple presets.</p>
+<ul>
+<li><strong>＋ New profile (copy current)</strong> — duplicates the active profile so you can
+experiment without touching the original.</li>
+<li><strong>Export current / Export all</strong> — writes the profile(s) to a JSON file
+(Suggested location).</li>
+<li><strong>Import from JSON…</strong> — reads a JSON file; profiles with an already-known id are
+updated, new ids are added, invalid entries are skipped.</li>
+</ul>
+<pre>Example JSON:
+[ { "format": 1,
+    "id": "e320", "name": "Landis+Gyr/EYKON E320", "pinLength": 4,
+    "pulseLengthMs": 180, "pulseGapMs": 320, "digitWaitMs": 3400, "longPulseMs": 6000,
+    "opticalScrolls": 8, "pinScrolls": 9,
+    "description": "Standard meter. Menu: P → E → E CLr → 1d → 7d → 30d → 365d → HiS CLr → inF → Pin." } ]</pre>
+
+<h2>8. Timing Reference</h2>
+<table>
+<tr><th>Parameter</th><th>Default</th><th>Adjustable</th><th>Used for</th></tr>
+<tr><td>Pulse length</td><td>180 ms</td><td>100–400 ms</td><td>Each single flash</td></tr>
+<tr><td>Pulse gap</td><td>320 ms</td><td>100–600 ms</td><td>Between flashes</td></tr>
+<tr><td>Digit wait</td><td>3.4 s</td><td>2.0–5.0 s</td><td>Meter accepting a digit</td></tr>
+<tr><td>Long pulse</td><td>6.0 s</td><td>4.0–9.0 s</td><td>Toggling inF / Pin</td></tr>
+<tr><td>Manual short</td><td>250 ms</td><td>fixed</td><td>Wake pulse & manual "Short"</td></tr>
+<tr><td>Wake wait</td><td>4.0 s</td><td>fixed</td><td>Wait for the display test</td></tr>
+<tr><td>Countdown</td><td>3 s</td><td>fixed</td><td>Before each sequence</td></tr>
+</table>
+
+<h2>9. Troubleshooting</h2>
+<table>
+<tr><th>Problem</th><th>Solution</th></tr>
+<tr><td>Torch does not switch on</td><td>Grant the Camera permission (app start or Android app settings). The app shows the reason in red. Some devices reject the torch while another app uses the camera — close it.</td></tr>
+<tr><td>"No torch on this device"</td><td>The phone has no flash camera. Use the Screen light source instead.</td></tr>
+<tr><td>Meter does not wake / no response</td><td>Hold the light exactly on the optical port, keep it steady, and make sure "Wake with display test first" is on. Increase the pulse gap in Settings if the meter rejects flashes.</td></tr>
+<tr><td>Sequence finishes but the meter did not unlock</td><td>Aim better and/or increase the digit wait. Ensure you entered the correct PIN.</td></tr>
+<tr><td>Meter shows <code>Pin oFF</code> and the menu jumps past the target</td><td>Switch "Send PIN first" off for the quick action.</td></tr>
+<tr><td>App language</td><td>The app follows the phone's display language: German phone → German UI, otherwise English.</td></tr>
+</table>
+
+<h2>10. Removing the app</h2>
+<p>Long-press the app icon → Uninstall. All profiles and settings are stored only on the
+device and are removed with the app, unless you exported them to a JSON file first.</p>
+
+<p style="margin-top:2em; color:#666; font-size:9pt;">Landis+Gyr, EYKON and E320 are trademarks of their owners.
+This app is an independent hobby tool; the manufacturer is not affiliated.</p>
+<p style="margin-top:1em; color:#666; font-size:9pt;">This app and its source code may not be used to
+obtain a meter PIN by brute force or to gain unauthorized access to a meter.</p>
+</body></html>

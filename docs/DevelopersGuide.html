@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>SmartMeter Blink – Developer Guide</title></head>
+<body>
+<style>
+body { font-family: 'Liberation Sans', 'DejaVu Sans', sans-serif; font-size: 10.5pt; color:#222; }
+h1 { color:#0b3d62; font-size:20pt; border-bottom:2px solid #0b3d62; padding-bottom:6px; }
+h2 { color:#0b3d62; font-size:15pt; margin-top:1.4em; border-bottom:1px solid #c8d6e5; }
+h3 { color:#2c3e50; font-size:12pt; }
+p { margin:0.4em 0; }
+table { border-collapse:collapse; width:100%; margin:0.6em 0; }
+th, td { border:1px solid #8ba0b0; padding:5px 8px; font-size:9.5pt; text-align:left; vertical-align:top; }
+th { background:#dbe9f6; }
+code, pre { font-family:'Liberation Mono','DejaVu Sans Mono',monospace; font-size:9pt; }
+pre { background:#f4f6f8; border:1px solid #c8d6e5; padding:8px; white-space:pre-wrap; }
+li { margin:0.2em 0; }
+</style>
+
+<h1>SmartMeter Blink<br>Developer Guide</h1>
+<p><strong>Version 1.0</strong> — internal architecture and build information.</p>
+
+<h2>1. Overview</h2>
+<p>
+A single-screen Jetpack Compose Android app that talks to a Landis+Gyr/EYKON E320 smart meter through
+light pulses. The whole UI is rendered by <code>MainScreen.kt</code> and driven by one
+<code>BlinkViewModel</code> exposing a <code>MutableStateFlow&lt;UiState&gt;</code>. All flashing
+logic is in the ViewModel; physical output is abstracted behind a <code>LightSource</code>
+(torch or full-white screen flash).
+</p>
+<table>
+<tr><th>Property</th><th>Value</th></tr>
+<tr><td>Package / applicationId</td><td><code>de.smartmeter.blink</code></td></tr>
+<tr><td>minSdk / targetSdk</td><td>26 / 35</td></tr>
+<tr><td>compileSdk</td><td>release(37) — AGP&nbsp;9 DSL, see build</td></tr>
+<tr><td>Kotlin / Compose</td><td>Kotlin 2.2.10, Compose BOM 2026.02.01 (Material 3)</td></tr>
+<tr><td>Dependencies</td><td>activity-compose, compose ui/material3/graphics/tooling, core-ktx, lifecycle runtime + viewmodel-android. No appcompat, no navigation, no Room.</td></tr>
+</table>
+
+<h2>2. Building</h2>
+<h3>Requirements</h3>
+<ul>
+<li>Android SDK with platform <code>android-37</code> and build-tools 36.x.</li>
+<li>JDK 25 (the Android Studio JBR is used: <code>/home/petric/android-studio/jbr</code>).</li>
+<li>Gradle wrapper 9.5.0 / AGP 9.3.2 in the repo (<code>gradlew</code>, configuration cache is on).</li>
+</ul>
+<h3>Commands</h3>
+<pre>export JAVA_HOME=/home/petric/android-studio/jbr
+./gradlew :app:assembleDebug
+./gradlew :app:assembleRelease
+
+# Install on a connected device / emulator
+$ANDROID_HOME/platform-tools/adb install -r app/build/outputs/apk/debug/SmartMeter-Blink.apk</pre>
+<p>Signed installable APK: <code>app/build/outputs/apk/release/SmartMeter-Blink.apk</code><br>
+Debug APK: <code>app/build/outputs/apk/debug/SmartMeter-Blink.apk</code>. The build tasks also emit
+<code>app-debug.apk</code>/<code>app-release.apk</code> in the same folders — the
+<code>SmartMeter-Blink.apk</code> names above are the ones kept for sharing/installing.</p>
+<h3>Signing</h3>
+<p>Release builds are signed with a dedicated release keystore. The keystore file and its passwords
+are never committed to the repository. Credentials are read at build time from environment variables
+(<code>BLINK_RELEASE_KEYSTORE</code>, <code>BLINK_STORE_PASSWORD</code>, <code>BLINK_KEY_ALIAS</code>,
+<code>BLINK_KEY_PASSWORD</code>) or from the local, chmod-600 file
+<code>~/.android/blink-release.properties</code>. Create the key once:</p>
+<pre>keytool -genkeypair -noprompt \
+  -keystore ~/.android/blink-release.keystore -alias blink \
+  -storepass '&lt;secret&gt;' -keypass '&lt;secret&gt;' \
+  -keyalg RSA -keysize 4096 -validity 10950 \
+  -dname "CN=SmartMeter Blink, O=SmartMeter Blink, C=DE"
+
+# ~/.android/blink-release.properties   (chmod 600)
+blinkReleaseKeystore=/home/&lt;you&gt;/.android/blink-release.keystore
+blinkStorePassword=&lt;secret&gt;
+blinkKeyAlias=blink
+blinkKeyPassword=&lt;secret&gt;</pre>
+<p>If no credentials are configured, the build falls back to the debug keystore
+(<code>~/.android/debug.keystore</code>, alias <code>androiddebugkey</code>) with a warning — fine
+for sideloading, never for publishing. Back up the keystore and passwords: losing them means you can
+no longer update an installed app. minification is off (<code>isMinifyEnabled = false</code>).</p>
+<p>minSdk is 26 because the app uses an adaptive launcher icon.</p>
+
+<h2>3. Project Structure</h2>
+<pre>app/src/main/
+  AndroidManifest.xml          permissions + main activity
+  java/de/smartmeter/blink/
+    MainActivity.kt            ComponentActivity, sets Compose content
+    BlinkViewModel.kt          state + all flashing/sequence logic
+    FlashlightController.kt    CameraManager.setTorchMode wrapper + lastError
+    LightSource.kt             LightSourceMode + torch/screen sources
+    MeterTiming.kt             timing defaults & ranges
+    MeterProfile.kt            profile model + predefined-profile loader
+    QuickAction.kt             inF / Pin actions + menu model
+    ui/
+      MainScreen.kt            the whole UI (profiles, PIN pad, cards, settings)
+      theme/                   Color.kt, Type.kt, Theme.kt
+  assets/
+    meter_profiles.json        predefined meter configs (format:1 JSON)
+  res/
+    values/strings.xml         English strings (source of truth)
+    values-de/strings.xml      German strings
+  build.gradle.kts</pre>
+
+<h2>4. Architecture &amp; State</h2>
+<h3>BlinkViewModel</h3>
+<ul>
+<li>Extends <code>AndroidViewModel</code>; owns a <code>CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)</code>.</li>
+<li>Exposes <code>UiState</code> (data class) via <code>StateFlow</code>: pin, light source,
+torch availability/error, dark-screen &amp; wake flags, profile list + active id, running flag,
+active digit index, strobe flag, current quick action, progress fraction and progress text.</li>
+<li><code>runOperation(label, estimatedTotalMs, block)</code> is the central runner: cancels any
+previous job, marks the state running, runs the suspend block with a <code>Progress</code>
+(report) helper, then in <code>finally</code> turns the light off, vibrates a pattern and resets
+the state. The caller can <code>stop()</code> at any time, which cancels <code>job</code> —
+all pulsing code is <code>delay()</code>-based and interruption leaves the light off.</li>
+<li>The <code>Progress</code> inner class accumulates reported milliseconds and renders
+<code>"… · ~Ns left"</code> from the estimated total (<code>estimatePin()</code> precomputes the
+PIN part; the quick-action total adds wake + scroll + long-hold).</li>
+</ul>
+<h3>Physical output</h3>
+<ul>
+<li><code>LightSourceMode</code> = <code>TORCH | SCREEN</code>. The ViewModel keeps a pending
+state field and turns the light on/off via <code>currentLight()</code>:
+  <ul>
+  <li>TORCH → <code>TorchLightSource</code> → <code>FlashlightController.setTorch</code>.</li>
+  <li>SCREEN → <code>ScreenLightSource</code> → sets <code>UiState.strobe</code>, which
+  <code>MainScreen.kt</code> renders as a full-white overlay (<code>Color.White</code>).</li>
+  </ul></li>
+<li><code>FlashlightController</code> resolves the flash camera lazily and records a localized
+<code>lastError</code> instead of throwing (SecurityException → permission hint,
+CameraAccessException → busy, no flash → not available). The camera permission is requested once
+at app start in the composable via <code>rememberLauncherForActivityResult</code>.</li>
+</ul>
+
+<h2>5. Sequence Logic</h2>
+<h3>Protocol (E320)</h3>
+<pre>menu indices after unlock (short flash = 1 step, start at P):
+  0 P   1 E   2 E CLr   3 1d   4 7d   5 30d   6 365d   7 HiS CLr   8 inF   9 Pin
+
+* one short flash from P wakes the meter into the display test (~4 s), then the PIN prompt
+* digit d is sent as d flashes (0 = no flash / wait)
+* after each digit except the last the app waits digitWait (default 3.4 s)
+* a long flash (>=4s) on inF / Pin toggles it — NEVER on CLr items (erases data)</pre>
+<h3>Send PIN</h3>
+<p><code>wakeMeter()</code> (optional, default on) = 1 short pulse + <code>wakeWaitMs</code> wait,
+<code>sendPinDigits()</code> = per digit: report, flash loop (on=pulseLength, off=pulseGap),
+accept-wait. Length is guarded by <code>appendDigit()</code> using <code>profile.pinLength</code>.</p>
+<h3>Quick actions</h3>
+<p><code>runQuickAction(action, sendPinFirst)</code>: wake → (PIN or skip) → scroll
+<code>opticalScrolls</code>/<code>pinScrolls</code> short pulses (gap between) → one long pulse.
+The <code>sendPinFirst</code> flag is a <em>per-run</em> choice because when the meter shows
+<code>Pin oFF</code> every flash scrolls the menu — sending PIN digits would walk past the target.
+If PIN is required but incomplete, a dialog (composed in the UI) asks for it.</p>
+
+<h2>6. Persistence &amp; Data Formats</h2>
+<h3>SharedPreferences ("settings")</h3>
+<table>
+<tr><th>Key</th><th>Content</th></tr>
+<tr><td><code>light_source</code></td><td><code>TORCH|SCREEN</code></td></tr>
+<tr><td><code>dark_screen</code> / <code>wake_meter</code></td><td>booleans</td></tr>
+<tr><td><code>profiles</code></td><td>comma-separated profile ids (order)</td></tr>
+<tr><td><code>active_profile</code></td><td>active profile id</td></tr>
+<tr><td><code>profile_name_&lt;id&gt;</code>, <code>profile_pinlen_&lt;id&gt;</code>,
+<code>profile_pulse_&lt;id&gt;</code>, <code>profile_gap_&lt;id&gt;</code>,
+<code>profile_digit_&lt;id&gt;</code>, <code>profile_long_&lt;id&gt;</code>,
+<code>profile_optical_&lt;id&gt;</code>, <code>profile_pin_scrolls_&lt;id&gt;</code></td>
+<td>one profile's timed/step values</td></tr>
+</table>
+<p>On first launch the predefined profiles from <code>assets/meter_profiles.json</code> are loaded via
+<code>MeterProfile.loadPredefined(...)</code> (parsed once with the platform <code>org.json</code>, then
+cached) and seeded as the initial profile list. In case the asset is missing or invalid the app falls
+back to <code>MeterProfile.DEFAULT</code> so it never starts without a profile. A localized description
+(<code>descriptionRes</code>) is re-attached using the <code>meter_profile_&lt;id&gt;_desc</code> resource
+convention. Descriptions are not serialized to JSON as resources, but plain <code>description</code>
+text is.</p>
+<h3>JSON format (export/import)</h3>
+<pre>[ { "format": 1, "id": "e320", "name": "Landis+Gyr/EYKON E320", "pinLength": 4,
+    "pulseLengthMs": 180, "pulseGapMs": 320, "digitWaitMs": 3400, "longPulseMs": 6000,
+    "opticalScrolls": 8, "pinScrolls": 9, "description": "…" } ]</pre>
+<p>Implemented with the platform <code>org.json</code> classes (no extra dependency). Import
+accepts an array or a single object, merges by <code>id</code> (known → update, unknown → add,
+invalid → skip), clamps every numeric field to its valid range, and re-persists the list.
+Export writes via SAF (<code>CreateDocument</code>/<code>OpenDocument</code> launchers in the UI)
+to get a user-chosen location.</p>
+
+<h2>7. Localization</h2>
+<ul>
+<li>All user-facing strings live in <code>res/values/strings.xml</code> (English, source of
+truth) and <code>res/values-de/strings.xml</code> (German) and are resolved automatically from
+the <strong>device</strong> display language.</li>
+<li>Composables use <code>stringResource(R.string.x)</code>; callbacks that need a resolved string
+at click-time pre-resolve it with <code>stringResource</code> and use
+<code>String.format(Locale.ROOT, …)</code> for format args.</li>
+<li>ViewModel messages use <code>getApplication&lt;Application&gt;().getString(resId, …)</code>
+via a private <code>str()</code> helper; <code>FlashlightController</code> uses its stored
+application context; <code>QuickAction.label(context)</code> and
+<code>MeterProfile.descriptionRes</code> cover the remaining dynamic text.</li>
+</ul>
+
+<h2>8. Permissions</h2>
+<table>
+<tr><th>Permission</th><th>Why</th></tr>
+<tr><td><code>android.permission.CAMERA</code></td><td><code>setTorchMode</code> throws without it;
+requested at runtime on first launch.</td></tr>
+<tr><td><code>android.permission.VIBRATE</code></td><td>Haptic feedback/pulse pattern at the end of
+a run. (Also declared as non-required features <code>camera</code> + <code>camera.flash</code>.)</td></tr>
+</table>
+
+<h2>9. Code Layout Notes</h2>
+<ul>
+<li>AGP 9 DSL quirks in <code>app/build.gradle.kts</code>: <code>compileSdk { version = release(37) }</code>,
+<code>optimization { enable = false }</code>, and signing via <code>signingConfigs.create("release")</code>.</li>
+<li>No viewmodel-compose artifact is used: the activity holds the ViewModel via
+<code>by viewModels()</code> and passes it into the root composable explicitly.</li>
+<li>Orientation: the manifest no longer locks <code>screenOrientation</code>, so the activity
+rotates into landscape on its own. No <code>configChanges</code> handling is used — the activity
+is recreated (state survives via <code>rememberSaveable</code> and the ViewModel).</li>
+<li><code>MainScreen.kt</code> is intentionally one file; its private composables are
+<code>ProfileSelector</code>, <code>KeypadButton</code>, <code>QuickActionCard</code>,
+<code>SettingsCard</code>, <code>LanguagePicker</code>-style helpers (none left),
+<code>TimingSliderRow</code> and <code>NumberStepper</code>.</li>
+<li>The dark-run overlay (<code>state.running</code>) is a black full-screen box that also
+captures taps → <code>viewModel.stop()</code>; the strobe overlay is drawn above it for the
+screen light source.</li>
+</ul>
+
+<h2>10. Possible Improvements</h2>
+<ul>
+<li>Richer localization (more languages, plural rules for the ETA seconds).</li>
+<li>Instrumented tests for the sequence logic (currently no unit tests for the timing math).</li>
+<li>Accessibility: content descriptions for the keypad and torch controls.</li>
+</ul>
+
+<p style="margin-top:2em; color:#666; font-size:9pt;">Landis+Gyr, EYKON and E320 are trademarks of their
+owners. This app is an independent hobby tool.</p>
+<p style="margin-top:1em; color:#666; font-size:9pt;">This app and its source code may not be used to
+obtain a meter PIN by brute force or to gain unauthorized access to a meter.</p>
+</body></html>

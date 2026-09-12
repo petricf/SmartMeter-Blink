@@ -1,0 +1,30 @@
+# Gradle
+.gradle/
+build/
+
+# Local configuration (contains machine-specific SDK path)
+local.properties
+
+# Kotlin
+.kotlin/
+
+# Android Studio / IntelliJ IDEA
+.idea/
+*.iml
+captures/
+.externalNativeBuild/
+.cxx/
+
+# Signing secrets — never commit keystores or password files
+*.jks
+*.keystore
+*.p12
+blink-release.properties
+
+# Build artifacts
+*.apk
+*.aab
+
+# OS
+.DS_Store
+Thumbs.db

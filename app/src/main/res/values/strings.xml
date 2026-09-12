@@ -1,0 +1,112 @@
+<resources>
+    <string name="app_name">SmartMeter Blink</string>
+
+    <!-- Home -->
+    <string name="subtitle">Landis+Gyr/EYKON E320 optical remote control</string>
+    <string name="meter_label">Meter</string>
+    <string name="light_torch">Torch</string>
+    <string name="light_screen">Screen</string>
+    <string name="test_light">Test light</string>
+    <string name="torch_perm_needed_ui">Camera permission required for the torch — allow it to use Torch mode.</string>
+    <string name="torch_no_device_ui">This device has no torch — using the screen as the light source.</string>
+    <string name="darken_label">Darken the screen during the sequence</string>
+    <string name="pin_label">Meter PIN</string>
+    <string name="send_pin">Send PIN</string>
+    <string name="clear_key">Clear</string>
+    <string name="tap_to_stop">tap anywhere to stop</string>
+    <string name="stop">Stop</string>
+    <string name="quick_actions">Quick actions</string>
+    <string name="quick_actions_hint">Choose the menu entry the meter should have stopped on after unlocking, then the app will scroll to it and hold the long flash.</string>
+    <string name="qa_inf_title">Optical interface (inF)</string>
+    <string name="qa_inf_subtitle">Scrolls the menu to inF and holds the long flash to switch the optical info interface on/off.</string>
+    <string name="qa_pin_title">PIN requirement (Pin)</string>
+    <string name="qa_pin_subtitle">Scrolls the menu to Pin and holds the long flash to switch the PIN protection on/off.</string>
+    <string name="qa_send_pin_first">Send PIN first (meter asks for PIN)</string>
+    <string name="qa_skip_note">Pin oFF on the meter — the PIN phase is skipped for this run.</string>
+    <string name="steps_after_pin">Steps after PIN: %1$d</string>
+    <string name="run">Run</string>
+    <string name="manual_pulses">Manual pulses</string>
+    <string name="pulse_short">Short</string>
+    <string name="pulse_long">Long</string>
+    <string name="settings_label">Settings</string>
+    <string name="collapse">Collapse</string>
+    <string name="timing_steps">Timing / steps</string>
+    <string name="warning_text">⚠ Never apply a long pulse while the meter shows E, E CLr, 1d/7d/30d/365d or HiS CLr.\nIt erases stored values. Long pulses are safe only on P, inF and Pin.\nStart every action from the P (power) display.</string>
+    <string name="tip_text">Tip: hold the phone\u2019s light against the meter\u2019s optical button instead of the display. Press Send PIN and keep it steady until it finishes.</string>
+
+    <!-- Dialog -->
+    <string name="pin_required_title">PIN not entered</string>
+    <string name="pin_required_body">Enter your %1$d-digit PIN above first, or switch \u201cSend PIN first\u201d off if this meter shows Pin oFF.</string>
+    <string name="ok">OK</string>
+
+    <!-- Profile dropdown -->
+    <string name="profile_new">＋ New profile (copy current)</string>
+    <string name="profile_export_current">Export current profile…</string>
+    <string name="profile_export_all">Export all profiles…</string>
+    <string name="profile_import">Import from JSON…</string>
+    <string name="profile_delete">Delete current profile</string>
+    <string name="meter_profile_e320_desc">Standard Landis+Gyr/EYKON smart meter. Menu after unlock: P → E → E CLr → 1d → 7d → 30d → 365d → HiS CLr → inF → Pin. inF = optical info interface, Pin = PIN protection.</string>
+
+    <!-- Settings -->
+    <string name="wake_label">Wake with display test first</string>
+    <string name="wake_desc">One short pulse first so a sleeping meter switches to the display test — used by Send PIN and the quick actions.</string>
+    <string name="pin_length">PIN length</string>
+    <string name="t_pulse_length">Pulse length</string>
+    <string name="t_pulse_gap">Pulse gap</string>
+    <string name="t_digit_wait">Digit wait</string>
+    <string name="t_long_pulse">Long pulse</string>
+    <string name="t_steps_inf">Steps to inF (optical interface)</string>
+    <string name="t_steps_pin">Steps to Pin (PIN requirement)</string>
+
+    <!-- Import / export notifications -->
+    <string name="export_done">Profile JSON exported.</string>
+    <string name="export_failed">Export failed: %1$s</string>
+    <string name="import_empty">Import failed: empty file.</string>
+    <string name="import_failed">Import failed: %1$s</string>
+
+    <!-- ViewModel status messages -->
+    <string name="vm_ready_default">Enter your PIN, then hold the phone against the meter\u2019s optical button.</string>
+    <string name="vm_ready_meter">Meter: %1$s. Enter your PIN or adjust the profile in Settings.</string>
+    <string name="vm_profile_created">New profile \u201c%1$s\u201d created from \u201c%2$s\u201d. Adjust timings and steps in Settings.</string>
+    <string name="vm_no_torch">No torch on this device — using the screen as the light source.</string>
+    <string name="vm_torch_permission_needed">Camera permission needed for the torch.</string>
+    <string name="vm_camera_denied">Camera permission denied — using the screen as the light source.</string>
+    <string name="vm_no_flash">No flash camera found — using the screen as the light source.</string>
+    <string name="vm_pin_enter_first">Enter your %1$d-digit PIN first.</string>
+    <string name="vm_import_summary">JSON import: %1$d added, %2$d updated, %3$d skipped.</string>
+    <string name="vm_test_light_label">Testing light — on for 2 seconds…</string>
+    <string name="vm_short_label">Short pulse…</string>
+    <string name="vm_long_label">Long pulse…</string>
+    <string name="vm_send_pin_label">Sending PIN…</string>
+    <string name="vm_run_action_label">Running %1$s…</string>
+    <string name="vm_countdown">Get ready — starting in %1$d… keep the phone against the optical button.</string>
+    <string name="vm_wake_start">Waking the meter (display test)…</string>
+    <string name="vm_wake_pulse">Wake pulse (%1$d ms)…</string>
+    <string name="vm_wake_wait">Waiting for the display test…</string>
+    <string name="vm_test_1s">Light test — 1s…</string>
+    <string name="vm_test_2s">Light test — 2s…</string>
+    <string name="vm_short_pulse">Short pulse (%1$d ms)…</string>
+    <string name="vm_long_pulse">Long pulse (%1$s s)…</string>
+    <string name="vm_digit_zero">Digit %1$d/%2$d: 0 — no flash, just waiting…</string>
+    <string name="vm_digit_flashing">Digit %1$d/%2$d: flashing %3$d…</string>
+    <string name="vm_digit_flash">Digit %1$d/%2$d: flash %3$d/%4$d</string>
+    <string name="vm_digit_wait">Waiting for the meter to accept digit %1$d…</string>
+    <string name="vm_skip_pin">Pin oFF on the meter — skipping the PIN entry.</string>
+    <string name="vm_scrolling">Scrolling %1$d × to %2$s…</string>
+    <string name="vm_scroll_step">Scroll %1$d/%2$d</string>
+    <string name="vm_holding">Holding %1$s s to toggle %2$s…</string>
+    <string name="vm_long_hold">Long hold…</string>
+    <string name="vm_eta">  ·  ~%1$ds left</string>
+    <string name="vm_done">Done.</string>
+    <string name="vm_stopped">Stopped — start over when ready.</string>
+    <string name="vm_error">Error: %1$s</string>
+    <string name="vm_stopping">Stopping…</string>
+
+    <!-- Flashlight errors -->
+    <string name="flash_no_flash">No camera with a flash was found.</string>
+    <string name="flash_list_failed">Could not list camera devices.</string>
+    <string name="flash_permission_missing">Camera permission is missing — allow it for the app.</string>
+    <string name="flash_permission_denied">Camera permission denied — the flashlight can\u2019t be used.</string>
+    <string name="flash_busy">The camera/flash is busy — close other apps using the camera.</string>
+    <string name="flash_failed">Torch command failed.</string>
+</resources>
