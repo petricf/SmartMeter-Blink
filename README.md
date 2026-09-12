@@ -46,6 +46,12 @@ authorized to operate. Using or modifying the app or its source code to obtain
 a meter PIN by brute force, or to otherwise gain unauthorized access to a
 meter, is **not permitted**. See the user guides for the full notice.
 
+## Acknowledgements
+
+This project was created with the help of
+[OpenCode](https://github.com/anomalyco/opencode), an open-source AI coding
+assistant.
+
 ## License
 
 [MIT](LICENSE) — SmartMeter Blink contributors.
