@@ -9,6 +9,8 @@ E320 meter and profile import/export.
 > It is designed so it can be expanded to other meters later (predefined
 > profiles are JSON loaded from `app/src/main/assets/meter_profiles.json`).
 
+![SmartMeter Blink start screen](docs/images/MainWindow.jpg)
+
 ## Documentation
 
 - [Users guide (English)](docs/UsersGuide.html) — [PDF](docs/pdf/UsersGuide.pdf)
