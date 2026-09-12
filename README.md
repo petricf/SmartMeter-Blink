@@ -5,6 +5,10 @@ A small Android app that controls the optical button of a
 no physical buttons, no PIN guessing. Comes with a preset profile for the
 E320 meter and profile import/export.
 
+> **Note:** This project currently targets the **Landis+Gyr E320** meter.
+> It is designed so it can be expanded to other meters later (predefined
+> profiles are JSON loaded from `app/src/main/assets/meter_profiles.json`).
+
 ## Documentation
 
 - [Users guide (English)](docs/UsersGuide.html) — [PDF](docs/pdf/UsersGuide.pdf)
