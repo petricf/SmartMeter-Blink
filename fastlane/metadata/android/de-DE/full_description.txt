@@ -1,0 +1,11 @@
+SmartMeter Blink steuert den optischen Bedientaster eines Landis+Gyr/EYKON E320 Stromzählers über die Taschenlampe oder das Bildschirmlicht des Telefons — ganz ohne Tastendruck, ohne PIN-Raten.
+
+Funktionen:
+- Vordefinierte Zählerprofile, geladen aus app/src/main/assets/meter_profiles.json (JSON-Import/-Export kompatibel)
+- Mehrere gespeicherte Profile pro Zählermodell
+- Taschenlampe und Bildschirm als Lichtquelle
+- Englische und deutsche Benutzeroberfläche
+- Schnellaktionen: optische Infoschnittstelle (inF) und PIN-Schutz (Pin) umschalten
+- Import/Export von Profilen als JSON (Format 1)
+
+Rechtlicher Hinweis: Diese App und ihr Quellcode dürfen nur an Zählern verwendet werden, die Sie besitzen oder an denen Sie autorisiert sind, sie zu bedienen. Die Verwendung oder Veränderung der App oder ihres Quellcodes, um eine Zähler-PIN durch Raten zu erhalten oder auf andere Weise unbefugten Zugriff auf einen Zähler zu erlangen, ist nicht gestattet. Den vollständigen Hinweis finden Sie in den Benutzerhandbüchern.

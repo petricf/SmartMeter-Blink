@@ -1,0 +1,11 @@
+SmartMeter Blink controls the optical button of a Landis+Gyr/EYKON E320 smart meter using the phone's torch or screen light — no physical buttons, no PIN guessing.
+
+Features:
+- Predefined meter profiles loaded from app/src/main/assets/meter_profiles.json (JSON import/export compatible)
+- Multiple saved profiles per meter model
+- Torch and screen flash light sources
+- English and German UI
+- Quick actions: toggle the optical info interface (inF) and PIN protection (Pin)
+- Import / export profiles as JSON (format 1)
+
+Legal notice: This app and its source code may only be used on meters you own or are authorized to operate. Using or modifying the app or its source code to obtain a meter PIN by brute force, or to otherwise gain unauthorized access to a meter, is not permitted. See the user guides for the full notice.
